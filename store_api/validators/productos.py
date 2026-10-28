@@ -11,6 +11,7 @@ from ..utils import (
     validar_string_no_vacio,
     validar_string_opcional,
     validar_largo_string,
+    validar_imagen,
     validar_entero,
     validar_decimal,
     validar_minimo,
@@ -35,7 +36,7 @@ def _recoger(fn):
 
 
 def validar_body_producto(body: dict) -> dict:
-    """Body de POST/PUT /productos: nombre, descripcion, precio, stock, imagen_url, categoria_id."""
+    """Body de POST/PUT /productos: nombre, descripcion, precio, stock, imagen, categoria_id."""
     _validar_body_presente(body)
 
     errores = []
@@ -62,9 +63,8 @@ def validar_body_producto(body: dict) -> dict:
     ))
     errores.extend(e4)
 
-    imagen_url, e5 = _recoger(lambda: validar_largo_string(
-        validar_string_opcional(body.get('imagen_url'), 'imagen_url'),
-        0, PRODUCTO_IMAGEN_MAX_LEN, 'imagen_url'
+    imagen, e5 = _recoger(lambda: validar_imagen(
+        body.get('imagen'), PRODUCTO_IMAGEN_MAX_LEN
     ))
     errores.extend(e5)
 
@@ -81,6 +81,6 @@ def validar_body_producto(body: dict) -> dict:
         'descripcion':  descripcion,
         'precio':       precio,
         'stock':        stock,
-        'imagen_url':   imagen_url,
+        'imagen':       imagen,
         'categoria_id': categoria_id,
     }

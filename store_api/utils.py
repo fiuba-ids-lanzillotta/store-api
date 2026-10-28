@@ -103,3 +103,30 @@ def validar_largo_string(valor: str, minimo: int, maximo: int, nombre: str) -> s
         ))
 
     return valor
+
+
+def validar_imagen(valor, maximo: int) -> str:
+    """
+    Imagen opcional como data URI base64. Acepta '' (sin imagen) o un data URI
+    tipo 'data:image/<tipo>;base64,<contenido>'.
+    """
+    texto = '' if valor is None else str(valor).strip()
+
+    if texto == '':
+        return ''
+
+    if not texto.startswith('data:image/') or ';base64,' not in texto:
+        raise ValueError(construir_error_api(
+            code='invalid.imagen.format',
+            message="Formato de 'imagen' invalido",
+            description="El campo 'imagen' debe ser un data URI base64 (data:image/...;base64,...)"
+        ))
+
+    if len(texto) > maximo:
+        raise ValueError(construir_error_api(
+            code=ERROR_CODE_INVALID_MAX_VALUE,
+            message=f"Longitud maxima superada en 'imagen'",
+            description=f"El campo 'imagen' debe tener como maximo {maximo} caracteres"
+        ))
+
+    return texto

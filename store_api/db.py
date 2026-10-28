@@ -114,7 +114,7 @@ def listar_productos(categoria_id: int = None, texto: str = None) -> list[dict]:
     """
     sql = """
         SELECT p.id, p.nombre, p.descripcion, p.precio, p.stock,
-               p.imagen_url, p.categoria_id, c.nombre AS categoria_nombre
+               p.imagen, p.categoria_id, c.nombre AS categoria_nombre
           FROM productos p
           JOIN categorias c ON c.id = p.categoria_id
          WHERE (:categoria_id IS NULL OR p.categoria_id = :categoria_id)
@@ -131,7 +131,7 @@ def listar_productos(categoria_id: int = None, texto: str = None) -> list[dict]:
 def obtener_producto_por_id(producto_id: int) -> dict:
     sql = """
         SELECT p.id, p.nombre, p.descripcion, p.precio, p.stock,
-               p.imagen_url, p.categoria_id, c.nombre AS categoria_nombre
+               p.imagen, p.categoria_id, c.nombre AS categoria_nombre
           FROM productos p
           JOIN categorias c ON c.id = p.categoria_id
          WHERE p.id = :id
@@ -143,8 +143,8 @@ def obtener_producto_por_id(producto_id: int) -> dict:
 
 def insertar_producto(datos: dict) -> int:
     sql = """
-        INSERT INTO productos (nombre, descripcion, precio, stock, imagen_url, categoria_id)
-        VALUES (:nombre, :descripcion, :precio, :stock, :imagen_url, :categoria_id)
+        INSERT INTO productos (nombre, descripcion, precio, stock, imagen, categoria_id)
+        VALUES (:nombre, :descripcion, :precio, :stock, :imagen, :categoria_id)
     """
 
     return ejecutar_mutacion(sql, datos)
@@ -157,7 +157,7 @@ def actualizar_producto(producto_id: int, datos: dict) -> None:
                descripcion = :descripcion,
                precio = :precio,
                stock = :stock,
-               imagen_url = :imagen_url,
+               imagen = :imagen,
                categoria_id = :categoria_id
          WHERE id = :id
     """

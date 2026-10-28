@@ -15,7 +15,7 @@ def construir_producto_dto(producto: dict) -> dict:
         'descripcion': producto['descripcion'],
         'precio':      float(producto['precio']),
         'stock':       producto['stock'],
-        'imagen_url':  producto['imagen_url'],
+        'imagen':  producto['imagen'],
         'categoria': {
             'id':     producto['categoria_id'],
             'nombre': producto['categoria_nombre'],

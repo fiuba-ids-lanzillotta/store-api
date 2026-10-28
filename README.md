@@ -8,6 +8,11 @@ Backend (API REST en Flask) de un ejemplo integrador: una **tienda simple** con
 `categorias` y `productos`, persistida en **MySQL**. La consumen el frontend
 [`store-web`](../store-web) (server-rendered) o cualquier cliente HTTP.
 
+Las imagenes de los productos se guardan en la base como **data URI base64**
+(columna `imagen` LONGTEXT): el frontend las sube como archivo, las convierte a
+base64 y las envia en el JSON; la API las devuelve tal cual y los templates las
+usan directo en `<img src>`.
+
 **Sin autenticacion**: todos los endpoints son publicos, a proposito, para
 mantener el ejemplo minimo.
 
@@ -78,10 +83,10 @@ curl -X POST http://localhost:5000/store_api/categorias \
   -H 'Content-Type: application/json' \
   -d '{"nombre": "Libros", "descripcion": "Libros y comics"}'
 
-# Crear producto
+# Crear producto (imagen: data URI base64, opcional)
 curl -X POST http://localhost:5000/store_api/productos \
   -H 'Content-Type: application/json' \
-  -d '{"nombre": "Novela", "descripcion": "Tapa dura", "precio": 19999.90, "stock": 5, "imagen_url": "", "categoria_id": 4}'
+  -d '{"nombre": "Novela", "descripcion": "Tapa dura", "precio": 19999.90, "stock": 5, "imagen": "data:image/jpeg;base64,/9j/4AAQ...", "categoria_id": 4}'
 
 # Listar productos de una categoria
 curl "http://localhost:5000/store_api/productos?categoria_id=4"
