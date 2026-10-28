@@ -26,6 +26,8 @@ DB_NAME     = os.getenv('DB_NAME', 'store')
 DB_URL      = f'mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 # Codigos de error
+ERROR_CODE_BAD_REQUEST           = 'invalid.request'
+ERROR_CODE_INTERNAL              = 'internal.error'
 ERROR_CODE_INVALID_BODY          = 'invalid.body'
 ERROR_CODE_INVALID_MIN_VALUE     = 'invalid.min.value'
 ERROR_CODE_INVALID_MAX_VALUE     = 'invalid.max.value'

@@ -94,7 +94,8 @@ curl "http://localhost:5000/store_api/productos?categoria_id=4"
 
 ### Formato de error
 
-Todos los errores devuelven el mismo envelope:
+Todos los errores devuelven el mismo envelope (incluidos los 400/500 genericos
+del `@app.errorhandler`, ej. una request mal formada o una caida de MySQL):
 
 ```json
 {
