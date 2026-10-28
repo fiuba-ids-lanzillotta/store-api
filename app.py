@@ -2,7 +2,7 @@ import logging
 from flask import Flask, jsonify
 from flask_cors import CORS
 
-from store_api.constants import BASE_URL, ERROR_CODE_BAD_REQUEST, ERROR_CODE_INTERNAL
+from store_api.constants import BASE_URL, ERROR_CODE_INTERNAL
 from store_api.utils import construir_error_api
 from store_api.routes.productos import productos_bp
 from store_api.routes.categorias import categorias_bp
@@ -14,16 +14,6 @@ app.json.sort_keys = False
 
 # Habilitar CORS para que el frontend pueda consumir la API
 CORS(app)
-
-
-@app.errorhandler(400)
-def bad_request(error):
-    """Bad request generico (request mal formada a nivel HTTP/Flask)."""
-    return jsonify(construir_error_api(
-        code=ERROR_CODE_BAD_REQUEST,
-        message='Solicitud invalida',
-        description='La solicitud no pudo ser procesada porque esta mal formada.'
-    )), 400
 
 
 @app.errorhandler(500)
